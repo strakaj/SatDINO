@@ -1,4 +1,4 @@
-# :artificial_satellite: :t-rex: SatDINO: A Deep Dive into Self-Supervised Pretraining for Remote Sensing
+# :artificial_satellite::t-rex: SatDINO: A Deep Dive into Self-Supervised Pretraining for Remote Sensing
 
 
 This is the official implementation of "SatDINO: A Deep Dive into Self-Supervised Pretraining for Remote Sensing" — a self-supervised learning framework tailored for satellite imagery. SatDINO builds upon the **[DINO](https://github.com/facebookresearch/dino)** framework and adapts it to the unique remote sensing data.
@@ -14,9 +14,9 @@ The models are pretrained on the RGB variant of the fMoW dataset and evaluated a
 
 | arch      | patch size | params. | GFLOPs | linear | hugging face                                                                          | weights                                                                                           | weights-finetune                                                                                           |
 |-----------|------------|---------|--------|--------|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| vit_small | 16         | 21.59   | 8.54   | 72.75  | [strakajk/satdino-vit_small-16](https://huggingface.co/strakajk/satdino-vit_small-16) | [ckp](https://huggingface.co/strakajk/satdino-vit_small-16/resolve/main/satdino-vit_small-16.pth) | [ckp](https://huggingface.co/strakajk/satdino-vit_small-16/resolve/main/satdino-vit_small-16-finetune.pth) |
-| vit_small | 8          | 21.37   | 33.56  | 73.53  | [strakajk/satdino-vit_small-8](https://huggingface.co/strakajk/satdino-vit_small-8)   | [ckp](https://huggingface.co/strakajk/satdino-vit_small-8/resolve/main/satdino-vit_small-8.pth)   | [ckp](https://huggingface.co/strakajk/satdino-vit_small-8/resolve/main/satdino-vit_small-8-finetune.pth)   |
-| vit_base  | 16         | 85.65   | 33.90  | 73.52  | [strakajk/satdino-vit_base-16](https://huggingface.co/strakajk/satdino-vit_base-16)   | [ckp](https://huggingface.co/strakajk/satdino-vit_base-16/resolve/main/satdino-vit_base-16.pth)   | [ckp](https://huggingface.co/strakajk/satdino-vit_base-16/resolve/main/satdino-vit_base-16-finetune.pth)   |
+| ViT-S | 16         | 21.59   | 8.54   | 72.75  | [strakajk/satdino-vit_small-16](https://huggingface.co/strakajk/satdino-vit_small-16) | [ckp](https://huggingface.co/strakajk/satdino-vit_small-16/resolve/main/satdino-vit_small-16.pth) | [ckp](https://huggingface.co/strakajk/satdino-vit_small-16/resolve/main/satdino-vit_small-16-finetune.pth) |
+| ViT-S | 8          | 21.37   | 33.56  | 73.53  | [strakajk/satdino-vit_small-8](https://huggingface.co/strakajk/satdino-vit_small-8)   | [ckp](https://huggingface.co/strakajk/satdino-vit_small-8/resolve/main/satdino-vit_small-8.pth)   | [ckp](https://huggingface.co/strakajk/satdino-vit_small-8/resolve/main/satdino-vit_small-8-finetune.pth)   |
+| ViT-B  | 16         | 85.65   | 33.90  | 73.52  | [strakajk/satdino-vit_base-16](https://huggingface.co/strakajk/satdino-vit_base-16)   | [ckp](https://huggingface.co/strakajk/satdino-vit_base-16/resolve/main/satdino-vit_base-16.pth)   | [ckp](https://huggingface.co/strakajk/satdino-vit_base-16/resolve/main/satdino-vit_base-16-finetune.pth)   |
 
 
 ### Create from HF
@@ -61,7 +61,7 @@ y = head(y)    # out: torch.Size([1, 63])
 ```
 
 ## Results
-| Dataset   | **SatDINO$_8$** | **SatDINO$_{16}$** | **Scale-MAE** | **SatMAE** |
+| Dataset   | **SatDINO<sub>8</sub>** | **SatDINO<sub>16</sub>** | **Scale-MAE** | **SatMAE** |
 |-----------|-----------------|--------------------|---------------|------------|
 | EuroSAT   | **87.72**       | 85.96              | 85.42         | 81.43      |
 | RESISC45  | **85.29**       | 82.32              | 79.96         | 65.96      |
@@ -69,11 +69,12 @@ y = head(y)    # out: torch.Size([1, 63])
 | WHU-RS19  | **98.18**       | 97.82              | 89.32         | 86.41      |
 | RS-C11    | **96.91**       | 96.61              | 93.03         | 83.96      |
 | SIRI-WHU  | **91.82**       | 87.19              | 84.84         | 77.76      |
+
 Average kNN classification accuracy across multiple scales (12.5%, 25%, 50%, and 100%).
 
 ---
 
-| **Dataset** | **Small$_{16}$** | **Small$_8$** | **Base**      |
+| **Dataset** | **Small<sub>16</sub>** | **Small<sub>8</sub>** | **Base**      |
 |-------------|------------------|---------------|---------------|
 | EuroSAT     | 98.69            | 98.76         | **98.83**     |
 | RESISC45    | 95.68            | 95.16         | **96.05**     |
@@ -81,17 +82,19 @@ Average kNN classification accuracy across multiple scales (12.5%, 25%, 50%, and
 | WHU-RS19    | **98.54**        | 98.06         | 97.57         |
 | RS-C11      | **98.01**        | 96.81         | 96.02         |
 | SIRI-WHU    | **98.54**        | 97.08         | 97.08         |
+
 SatDINO fine-tuning classification accuracy.
 
 ---
 
-| **Model** | **Backbone**     | **Potsdam 224$^2$** | **Potsdam 512$^2$** | **Vaihingen 224$^2$** | **Vaihingen 512$^2$** | **LoveDA 224$^2$** | **LoveDA 512$^2$** |
+| **Model** | **Backbone**     | **Potsdam 224<sup>2</sup>** | **Potsdam 512<sup>2</sup>** | **Vaihingen 224<sup>2</sup>** | **Vaihingen 512<sup>2</sup>** | **LoveDA 224<sup>2</sup>** | **LoveDA 512<sup>2</sup>** |
 |-----------|------------------|---------------------|---------------------|-----------------------|-----------------------|--------------------|--------------------|
 | SatMAE    | ViT-Large        | 67.88               | 70.39               | 64,81                 | 69.13                 | 46.28              | 52.28              |
 | Scale-MAE | ViT-Large        | 69.74               | **72.21**           | 67.97                 | **71.65**             | **49.37**          | **53.70**          |
-| SatDINO   | ViT-Small$_{16}$ | 67.93               | 71.80               | 63.38                 | 68.32                 | 44.77              | 49.65              |
-| SatDINO   | ViT-Small$_8$    | **70.71**           | 71.45               | **68.69**             | 67.71                 | 47.53              | 50.20              |
+| SatDINO   | ViT-Small<sub>16</sub> | 67.93               | 71.80               | 63.38                 | 68.32                 | 44.77              | 49.65              |
+| SatDINO   | ViT-Small<sub>8</sub>    | **70.71**           | 71.45               | **68.69**             | 67.71                 | 47.53              | 50.20              |
 | SatDINO   | ViT-Base         | 67.65               | 71.63               | 64.85                 | 69.37                 | 44.25              | 50.08              |
+
 Semantic segmentation performance across multiple datasets and image scales. All results are reported in terms of mean Intersection over Union (mIoU).
 
 
